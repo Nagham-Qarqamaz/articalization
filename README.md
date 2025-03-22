@@ -3,16 +3,10 @@
 ## **Description**  
 React News App is a web application that fetches and displays news from multiple sources, offering advanced filtering and user preferences. It is containerized with Docker for seamless setup and deployment.  
 
-## **Features**  
-✅ Fetches news from multiple sources (The Guardian, The New York Times, NewsAPI.org).  
-✅ Supports environment-based configuration using `.env` files.  
-✅ Dockerized for consistent environments and easy deployment.  
-
 ## **Technologies Used**  
 - React  
 - TypeScript  
 - Docker  
-- `.env` for environment variables  
 
 ## **Prerequisites**  
 Ensure you have the following installed before setting up the project:  

@@ -5,7 +5,9 @@ React News App is a web application that fetches and displays news from multiple
 
 ## **Technologies Used**  
 - React  
-- TypeScript  
+- TypeScript
+- Tailwind
+- Redux
 - Docker  
 
 ## **Prerequisites**  

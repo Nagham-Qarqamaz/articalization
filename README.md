@@ -1,137 +1,75 @@
-# Your React Application
+# React News App
 
-This is a React application containerized with Docker.
+## Description
+
+This is a React application that fetches and displays news from multiple sources, with advanced filtering and preference options. It is containerized using Docker for easy setup and deployment.
+
+## Features
+
+* Fetches news from different sources (The Guardian, New York Times, NewsAPI.org).
+* Dockerized for consistent environment and easy deployment.
+
+## Technologies Used
+
+* React
+* TypeScript
+* Docker
+* `.env` for environment variables
+
+## Prerequisites
+
+* Node.js and yarn installed (for local development)
+* Docker installed
+
+## Environment Variables
+
+The application uses environment variables to store API keys. You need to create a `.env` file in the project root, copy .env.example;
+
+**Note:** Replace the empty strings with your actual API keys.  You will need to obtain API keys from The Guardian, The New York Times, and NewsAPI.org.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+### Local Development
 
-### Prerequisites
-
-* Docker installed on your machine.
-* Node.js and Yarn installed (if you need to make changes to the code).
-* Git installed (if you are going to clone the repository).
-
-### Installation
-
-1.  **Clone the repository (if applicable):**
-
+1.  Clone the repository:
     ```bash
-    git clone <repository_url>
-    cd <your_project_directory>
+    git clone [<repository_url>](https://github.com/Nagham-Qarqamaz/articalization.git)
+    cd articalization
     ```
-
-    Replace `<repository_url>` with the URL of your Git repository and `<your_project_directory>` with the name of your project folder.
-
-2.  **Build the Docker image:**
-
-    ```bash
-    docker build -t your-react-app .
-    ```
-
-    Replace `your-react-app` with your desired image name.
-
-3.  **Run the Docker container:**
-
-    ```bash
-    docker run -p 3000:80 your-react-app
-    ```
-
-    This will start the container and map port 3000 on your host machine to port 80 in the container.
-
-4.  **Access the application:**
-
-    Open your web browser and navigate to `http://localhost:3000`.
-
-### Development
-
-If you need to make changes to the React application:
-
-1.  **Install dependencies:**
-
+2.  Install dependencies:
     ```bash
     yarn install
     ```
+3.  Create a `.env` file in the project root and add your API keys.
+4.  Start the development server:
+    ```bash
+    yarn dev
+    ```
+    The app will be accessible at `http://localhost:<port>`.
 
-2.  **Start the development server:**
+### Docker Deployment
+
+1.  Clone the repository:
+    ```bash
+    git clone [<repository_url>](https://github.com/Nagham-Qarqamaz/articalization.git)
+    cd articalization
+    ```
+2.  Create a `.env` file in the project root and add your API keys.
+3.  Build the Docker image:
+    ```bash
+    docker build -t articalization .
+    ```
+4.  Run the Docker container:
 
     ```bash
-    yarn start
+    docker run -p 8080:80 articalization
     ```
+    The app will be accessible at `http://localhost:8080`.  You can change the port mapping (8080:80) if port 80 is already in use.
 
-3.  Make your changes to the React application.
+## Docker Image
 
-4.  After making changes, rebuild the Docker image.
-
-    ```bash
-    docker build -t your-react-app .
-    ```
-
-5.  And restart the container.
-
-    ```bash
-    docker stop $(docker ps -aq --filter="name=your-react-app") && docker rm $(docker ps -aq --filter="name=your-react-app") && docker run -p 3000:80 your-react-app
-    ```
-
-    \* This command stops and removes any running containers with the name "your-react-app" and then starts a new one.
-
-### Environment Variables
-
-This application uses environment variables for API keys. You can provide these variables to the Docker container in a few ways:
-
-**1. Using the `-e` flag:**
-
-    ```bash
-    docker run -p 3000:80 \
-      -e VITE_GUARDIAN_API_KEY="your_guardian_api_key" \
-      -e VITE_NYT_API_KEY="your_nyt_api_key" \
-      -e VITE_NEWSAPI_KEY="your_newsapi_key" \
-      your-react-app
-    ```
-
-    Replace `"your_guardian_api_key"`, `"your_nyt_api_key"`, and `"your_newsapi_key"` with your actual API keys.
-
-**2. Using a `.env` file and Docker Compose:**
-
-    Create a `.env` file in the same directory as your `docker-compose.yml` file:
-
-    ```dotenv
-    VITE_GUARDIAN_API_KEY=your_guardian_api_key
-    VITE_NYT_API_KEY=your_nyt_api_key
-    VITE_NEWSAPI_KEY=your_newsapi_key
-    ```
-
-    Then create your `docker-compose.yml` file:
-
-    ```yaml
-    version: "3.8"
-    services:
-      web:
-        build: .
-        ports:
-          - "3000:80"
-        environment:
-          VITE_GUARDIAN_API_KEY: ${VITE_GUARDIAN_API_KEY}
-          VITE_NYT_API_KEY: ${VITE_NYT_API_KEY}
-          VITE_NEWSAPI_KEY: ${VITE_NEWSAPI_KEY}
-    ```
-
-    Then, run:
-
-    ```bash
-    docker-compose up --build
-    ```
-
-    **Important:** Do not commit your `.env` file containing sensitive API keys to your Git repository. Add it to your `.gitignore` file.
-
-    ```gitignore
-    node_modules
-    build
-    .env
-    .DS_Store
-    ```
-
-### .dockerignore
-
-A `.dockerignore` file is included to exclude unnecessary files from the Docker build, such as `node_modules` and `build` folders.
+* The Dockerfile uses a multi-stage build:
+    * First stage (`build`):  Builds the React application.
+    * Second stage:  Uses Nginx to serve the static files from the build.
+* The image exposes port 80.
 

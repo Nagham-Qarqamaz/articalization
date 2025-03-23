@@ -1,4 +1,4 @@
-# **React News App**  
+# **Articalization**  
 
 ## **Description**  
 React News App is a web application that fetches and displays news from multiple sources, offering advanced filtering and user preferences. It is containerized with Docker for seamless setup and deployment.  
@@ -6,7 +6,7 @@ React News App is a web application that fetches and displays news from multiple
 ## **Technologies Used**  
 - React  
 - TypeScript
-- Tailwind
+- TailwindCSS
 - Redux
 - Docker  
 
@@ -64,8 +64,49 @@ The application stores API keys in environment variables. To set them up:
 
 ## **Docker Image Details**  
 The `Dockerfile` follows a multi-stage build process:  
+
 1. **Build Stage:** Compiles the React application.  
 2. **Production Stage:** Uses Nginx to serve the static files efficiently.  
 
 The final image exposes port `80`.  
 
+---
+
+## **Upcoming Work and Features**
+
+### 1. **Timezone and Date Filtering Issue:**
+
+When filtering articles by date, I encountered issues where:
+- Articles from after the start date were missing.
+- Articles from after the end date were included.
+
+This behavior depended on the user's timezone.
+
+I tried updating date values to datetime and adjusting for the user's timezone, but some sources like The New York Times seemed to not support datetime filtering and only supported date-based filtering.
+
+To address this, the app will now:
+- Fetch all articles from `from-date - 1 day` to `to-date + 1 day`.
+- Perform local filtering to ensure only the correct articles are displayed based on the user’s preferences.
+
+### 2. **User Preferences:**
+
+Currently, user preferences are stored in local storage. The next step will be to implement a login system, enabling preferences to be stored in a database.
+
+**Planned Fix:**  
+- Set up user authentication and integrate a backend to store and retrieve preferences from a database, making the preferences persistent across devices.
+
+### 3. **Article Display Based on Preferences:**
+
+Articles from preferred sources, authors, or categories appear frequently in search results. However, if users don’t interact with these articles enough, they continue to show up.
+
+**Planned Fix:**  
+- Implement a frequency-based algorithm to track which articles users engage with, and decrease the frequency of articles they haven’t interacted with in a while.
+- If an article from a specific source or author doesn't get any interactions after multiple appearances, stop showing it in the results.
+
+### 4. **Not Interested Feature:**
+
+To improve the user experience, a "Not Interested" feature will be introduced, allowing users to remove similar articles from appearing in the future.
+
+**Planned Fix:**  
+- Add a "Not Interested" button to articles, allowing users to indicate when they don’t want to see similar content again.
+- Store these preferences in the backend to adjust the content shown based on user feedback.

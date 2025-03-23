@@ -3,6 +3,12 @@
 ## **Description**  
 React News App is a web application that fetches and displays news from multiple sources, offering advanced filtering and user preferences. It is containerized with Docker for seamless setup and deployment.  
 
+## Application Overview
+
+To take a look at the application, please check out this video:
+
+[![Watch the video](https://img.youtube.com/vi/9V-b1aAr0dQ/maxresdefault.jpg)](https://www.youtube.com/watch?v=9V-b1aAr0dQ&ab_channel=NaghamQarqamaz)
+
 ## **Technologies Used**  
 - React  
 - TypeScript

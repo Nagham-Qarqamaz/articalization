@@ -48,7 +48,7 @@ function Pagination({
 							disabled={page == currentPage}
 						/>
 					) : (
-						<span key={index} className="px-2">
+						<span key={index} className="px-2 text-primary">
 							...
 						</span>
 					)

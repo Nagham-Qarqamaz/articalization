@@ -7,20 +7,15 @@ import {
 	Pagination,
 } from "@Components";
 import { useNews } from "@Hooks";
-import { RootState, setPage } from "@Redux";
+import { setPage, selectPaginatedArticles, selectPagination } from "@Redux";
 
 function NewsPage() {
 	const dispatch = useDispatch();
 	const { isLoading, errors } = useNews();
 
-	const articles = useSelector((state: RootState) => {
-		const { value, currentPage, itemsPerPage } = state.articles;
-		const startIndex = (currentPage - 1) * itemsPerPage;
-		return value.slice(startIndex, startIndex + itemsPerPage);
-	});
-	const { currentPage, value, itemsPerPage } = useSelector(
-		(state: RootState) => state.articles
-	);
+	const articles = useSelector(selectPaginatedArticles);
+	const { currentPage, value, itemsPerPage } = useSelector(selectPagination);
+
 	const totalPages = Math.ceil(value.length / itemsPerPage);
 
 	return (

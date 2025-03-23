@@ -74,7 +74,7 @@ function ArticleCard({ article }: { article: Article }) {
 						</span>
 					</div>
 
-					<div className="text-sm text-gray-700 mt-1 flex gap-1 items-center">
+					<div className="text-sm text-gray-700 mt-1 flex gap-1 items-start">
 						<FavoriteButton
 							onClick={() => {
 								dispatch(

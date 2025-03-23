@@ -1,4 +1,5 @@
-import { useSelector } from "react-redux";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
 	CategoryFilter,
 	DateFilter,
@@ -6,44 +7,65 @@ import {
 	ResetFiltersButton,
 	SourceFilter,
 } from "@Components";
-import { RootState } from "@Redux";
+import { RootState, resetFilters } from "@Redux";
 
 function Filters() {
 	const filters = useSelector((state: RootState) => state.filters);
+	const [resetKey, setResetKey] = useState(0);
+
+	const dispatch = useDispatch();
+
+	const handleReset = () => {
+		setResetKey((prev) => (prev + 1) % 1000);
+		dispatch(resetFilters());
+	};
+
+	const dateFilter = (
+		<DateFilter
+			key={resetKey}
+			value={{ from: filters.from, to: filters.to }}
+		/>
+	);
+	const categoryFilter = (
+		<CategoryFilter key={resetKey + 1} value={filters.category} />
+	);
+	const queryFilter = (
+		<QueryFilter key={resetKey + 2} value={filters.query} />
+	);
+	const sourceFilter = (
+		<SourceFilter key={resetKey + 3} value={filters.source} />
+	);
+	const resetFiltersButton = <ResetFiltersButton onReset={handleReset} />;
 
 	return (
 		<>
-			<div className="hidden lg:block">
+			<div className="hidden xl:block">
 				<div className="space-y-8">
 					<div className="flex justify-between gap-x-12 xl:gap-x-28 items-end">
-						<DateFilter
-							value={{ from: filters.from, to: filters.to }}
-						/>
-						<CategoryFilter value={filters.category} />
-						<ResetFiltersButton />
+						{dateFilter}
+						{categoryFilter}
+						{resetFiltersButton}
 					</div>
 					<div className="flex justify-between gap-x-12 xl:gap-x-28 items-center">
-						<QueryFilter value={filters.query} />
-						<SourceFilter value={filters.source} />
+						{queryFilter}
+						{sourceFilter}
 					</div>
 				</div>
 			</div>
 
-			<div className="hidden md:block lg:hidden">
+			<div className="hidden md:block xl:hidden">
 				<div className="space-y-8">
 					<div className="flex justify-between gap-x-12 xl:gap-x-28 items-end">
-						<DateFilter
-							value={{ from: filters.from, to: filters.to }}
-						/>
-						<ResetFiltersButton />
+						{dateFilter}
+						{resetFiltersButton}
 					</div>
 
 					<div className="flex justify-between gap-x-12 xl:gap-x-28 items-center">
-						<QueryFilter value={filters.query} />
+						{queryFilter}
 					</div>
 					<div className="flex justify-between gap-x-12 xl:gap-x-28 items-center">
-						<CategoryFilter value={filters.category} />
-						<SourceFilter value={filters.source} />
+						{categoryFilter}
+						{sourceFilter}
 					</div>
 				</div>
 			</div>
@@ -51,36 +73,27 @@ function Filters() {
 			<div className="hidden sm:block md:hidden">
 				<div className="space-y-8">
 					<div className="flex justify-between gap-x-12 xl:gap-x-28 items-end">
-						<DateFilter
-							value={{ from: filters.from, to: filters.to }}
-						/>
+						{dateFilter}
 					</div>
 					<div className="flex justify-between gap-x-12 xl:gap-x-28 items-center">
-						<QueryFilter value={filters.query} />
-						<SourceFilter value={filters.source} />
+						{queryFilter}
+						{sourceFilter}
 					</div>
 					<div className="flex justify-between gap-x-12 xl:gap-x-28 items-center">
-						<CategoryFilter value={filters.category} />
-
-						<ResetFiltersButton />
+						{categoryFilter}
+						{resetFiltersButton}
 					</div>
 				</div>
 			</div>
 
-			<div className="sm:hidden space-y-12">
-				<div>
-					<DateFilter
-						value={{ from: filters.from, to: filters.to }}
-					/>
-				</div>
+			<div className="sm:hidden mx-auto space-y-12">
+				<div>{dateFilter}</div>
 				<div className="space-y-4">
-					<QueryFilter value={filters.query} />
-					<CategoryFilter value={filters.category} />
-					<SourceFilter value={filters.source} />
+					{queryFilter}
+					{categoryFilter}
+					{sourceFilter}
 				</div>
-				<div>
-					<ResetFiltersButton />
-				</div>
+				<div>{resetFiltersButton}</div>
 			</div>
 		</>
 	);

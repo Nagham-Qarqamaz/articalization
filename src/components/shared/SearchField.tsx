@@ -26,7 +26,13 @@ function SearchField({
 				type="text"
 				placeholder={placeholder}
 				value={query}
-				onChange={(e) => setQuery(e.target.value)}
+				onChange={(e) => {
+					const newValue = e.target.value;
+					setQuery(newValue);
+					if (newValue === "") {
+						onSearch("");
+					}
+				}}
 				onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
 					if (e.key === "Enter") {
 						onSearch(query);

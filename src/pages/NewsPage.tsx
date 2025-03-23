@@ -20,7 +20,7 @@ function NewsPage() {
 
 	return (
 		<Container>
-			<div className="py-20 space-y-8">
+			<div className="py-20 space-y-8 max-w-96 sm:max-w-full">
 				<Filters />
 				<div className="flex flex-col justify-center items-center gap-8">
 					<div>

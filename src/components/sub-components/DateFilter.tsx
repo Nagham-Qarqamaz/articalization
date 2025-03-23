@@ -27,6 +27,12 @@ function DateFilter({ value }: DateFilterProps) {
 		}
 	}, [fromDate, toDate]);
 
+	const handleReset = () => {
+		setFromDate("");
+		setToDate("");
+		dispatch(updateDateFilters({ fromDate: "", toDate: "" }));
+	};
+
 	return (
 		<div className="flex flex-col gap-4">
 			<div className="flex flex-col sm:flex-row sm:items-end gap-2">
@@ -57,13 +63,20 @@ function DateFilter({ value }: DateFilterProps) {
 					/>
 				</div>
 
-				<Button
-					className="min-w-24"
-					text="Apply"
-					onClick={() =>
-						dispatch(updateDateFilters({ fromDate, toDate }))
-					}
-				/>
+				<div className="flex gap-2">
+					<Button
+						className="min-w-24 flex-grow"
+						text="Apply"
+						onClick={() =>
+							dispatch(updateDateFilters({ fromDate, toDate }))
+						}
+					/>
+					<Button
+						className="min-w-24 flex-grow"
+						text="Reset"
+						onClick={handleReset}
+					/>
+				</div>
 			</div>
 		</div>
 	);
